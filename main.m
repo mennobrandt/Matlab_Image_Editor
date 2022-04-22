@@ -15,6 +15,6 @@ if begin == "n"
     return; % Exits the program
 else
     [filePath,image,imageName,rows,cols] = openFile();
-    newImage = scaleImage(image,rows,cols);
-    imshow(newImage);
+    %newImage = scaleImage(image,rows,cols);
+    selectionMenu(); % Edits to perform on the image. 
 end
