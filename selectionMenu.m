@@ -3,23 +3,25 @@ function[commandList] = selectionMenu()
     validCommands = ["flip-hor","flip-vert","invert-colours","resize"];
     commandList = [];
 
-    dispCommands = "Available commands: ";
-    % This loop formats a string that shows the valid edits users can
-    % perform on the image. They are self-explanatory.
-
-    %{ Should format msg w commands, but doesn't
+    displayCommands = "";
     for i = 1:length(validCommands)
-        append(dispCommands, ' ',validCommands(i));
+        if i ~= 1
+            displayCommands = displayCommands + ", " + validCommands(i);
+        else
+            displayCommands = displayCommands + validCommands(i);
+        end
     end
-    fprintf("%s",dispCommands);
+    fprintf("\nAvailable Commands: %s\n",displayCommands);
+    fprintf("Type 'done' when finished.\n")
 
-    while true % Ask user for commands, until they quit. 
-        currentCmd = input("Enter command, or 'done' to quit: ","s");
+    while true % Ask user for commands, until they quit. m
+        currentCmd = input("    Enter command: ","s");
         valid = false;
         for j = 1:length(validCommands)
             if strcmp(currentCmd,validCommands(j))
-                valid = true;
-                validCommands(i) = [];
+                if ~ismember(currentCmd,commandList) % Has the command already been entered? 
+                    valid = true;
+                end
             elseif strcmp(currentCmd,"done")
                 return;
             end
@@ -27,9 +29,9 @@ function[commandList] = selectionMenu()
     
         if valid == true
             commandList = [commandList,currentCmd];
-            disp("Successfully added.");
+            disp("      Successfully added to que.");
         else
-            disp("Invalid Command/Already entered.");
+            disp("      Unrecognised command/already entered");
         end
     end
 end
