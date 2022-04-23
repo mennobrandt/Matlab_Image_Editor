@@ -3,6 +3,7 @@ function[commandList] = selectionMenu()
     validCommands = ["flip-hor","flip-vert","invert-colours","resize"];
     commandList = [];
 
+    % Loop that constructs and shows a message of available commands
     displayCommands = "";
     for i = 1:length(validCommands)
         if i ~= 1
@@ -12,26 +13,27 @@ function[commandList] = selectionMenu()
         end
     end
     fprintf("\nAvailable Commands: %s\n",displayCommands);
-    fprintf("Type 'done' when finished.\n")
+    fprintf("Type 'done' when finished.\n");
 
-    while true % Ask user for commands, until they quit. m
-        currentCmd = input("    Enter command: ","s");
-        valid = false;
-        for j = 1:length(validCommands)
-            if strcmp(currentCmd,validCommands(j))
-                if ~ismember(currentCmd,commandList) % Has the command already been entered? 
-                    valid = true;
-                end
-            elseif strcmp(currentCmd,"done")
-                return;
-            end
-        end
-    
-        if valid == true
-            commandList = [commandList,currentCmd];
-            disp("      Successfully added to que.");
+    qNum = 0;
+    while true
+        % Format message and ask user for command(s) to que
+        qNum = qNum + 1;
+        instruction = sprintf("    %d. Enter Command: ",qNum);
+        command = input(instruction,"s");
+        % Validate whether the command is valid, or a duplicate
+        if any(ismember(command,validCommands)) && ~all(ismember(command,commandList))
+            commandList = [commandList,command];
+            disp("      Successfully add to que.")
+        elseif any(ismember(command,validCommands)) && all(ismember(command,commandList))
+            disp("      Invalid command. Already in que.");
+            qNum = qNum - 1; % Stay on same command number.
+        elseif command == "done"
+            disp("      Exiting...")
+            return; % Exit While loop
         else
-            disp("      Unrecognised command/already entered");
+            disp("      Invalid command. Please refer to list.");
+            qNum = qNum - 1;
         end
     end
 end
