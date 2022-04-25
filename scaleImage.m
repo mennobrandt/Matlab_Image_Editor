@@ -1,7 +1,7 @@
-function[newImage] = scaleImage(image,oldRows,oldCols)
+function[newImage] = scaleImage(image)
     % Changes images resolution through "Nearest Neighbour" scaling
     % Method idea/pseudocode found from this: https://www.youtube.com/watch?v=AqscP7rc8_M&t=133s
-    
+    [oldRows,oldCols] = size(image);
     % Display current resolution
     fprintf("Current resolution: %d (width) x %d (height)\n",oldCols,oldRows);
     
@@ -18,10 +18,10 @@ function[newImage] = scaleImage(image,oldRows,oldCols)
     end
 
     % Define ranges for interpolation. Vectors must be same size (length).
-    oldRowRange = [1:oldRows];
+    oldRowRange = 1:oldRows;
     newRowRange = linspace(1,newRows,oldRows); % incremented from 1-->new resolution
     
-    oldColRange = [1:oldCols];
+    oldColRange = 1:oldCols;
     newColRange = linspace(1,newCols,oldCols);
 
     newImage = []; % Declare blank matrix for scaled image
