@@ -1,4 +1,4 @@
-function[commandList] = selectionMenu()
+function[commandList] = qeueEdits()
     % Reads the edits the user wants on their image
     validCommands = ["flip-hor","flip-vert","invert-colours","resize"];
     commandList = {};
@@ -27,9 +27,9 @@ function[commandList] = selectionMenu()
             disp("      Successfully added to queue .")
         elseif any(ismember(command,validCommands)) && all(ismember(command,commandList))
             disp("      Invalid command. Already in queue.");
-            qNum = qNum - 1; % Stay on same command number.
+            qNum = qNum - 1; % Stay on the same command number. More user friendly. 
         elseif command == "done"
-            disp("      Exiting...")
+            disp("      Performing edits...")
             return; % Exit While loop
         else
             disp("      Invalid command. Please refer to list.");
