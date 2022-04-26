@@ -1,11 +1,10 @@
-function[newImage] = invert(tempImage)
-    % Invert an image's colours. (Black becomes white, white becomes black)
-    [oldRows,oldCols] = size(tempImage);
-    newImage = [];
-
+function [newImage] = flipVertical(tempImage)
+    % Flips an image vertically
+    oldRows = size(tempImage,1);
+   
+    newImage = []; % Blank matrix to populate with flipped rows
     for i = 1:oldRows
-            for j = 1:oldCols
-
-            end
+        % Incrementally prepend rows of tempImage, to populate newImage
+        newImage = [tempImage(i,:);newImage]; 
     end
 end
