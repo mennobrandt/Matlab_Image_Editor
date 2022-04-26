@@ -1,10 +1,18 @@
-function [newImage] = flipVertical(tempImage)
-    % Flips an image vertically
-    oldRows = size(tempImage,1);
-   
-    newImage = []; % Blank matrix to populate with flipped rows
+function[newImage] = invert(tempImage)
+    % Invert an image's colours. (Black becomes white, white becomes black)
+    [oldRows,oldCols] = size(tempImage);
+
+    newImage = [];
     for i = 1:oldRows
-        % Incrementally prepend rows of tempImage, to populate newImage
-        newImage = [tempImage(i,:);newImage]; 
+        imageRow = []; % Clear current row
+        for j = 1:oldCols
+            % Assumption is made that image is uint8, and uses pixel vals-
+            % ranging from 1-255
+            oldVal = tempImage(i,j);
+            newVal = abs(255-oldVal); % Invert/reverse value
+            imageRow = [imageRow,newVal];
+        end
+        % Append row with inverted pixel values to newImage matrix
+        newImage = [newImage;imageRow]; 
     end
 end
