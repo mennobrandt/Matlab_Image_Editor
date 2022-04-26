@@ -1,9 +1,23 @@
-function[newImage] = scaleImage(image)
+function[newImage] = scaleImage(tempImage)
     % Changes images resolution through "Nearest Neighbour" scaling
-    % Method idea/pseudocode found from this: https://www.youtube.com/watch?v=AqscP7rc8_M&t=133s
-    [oldRows,oldCols] = size(image);
+    % Method idea found from this Computerphile video: https://www.youtube.com/watch?v=AqscP7rc8_M&t=133s
+
+    %{
+        Basic summary of program:
+            - The user inputs the new width (columns) and height (rows) of
+              the image. 
+            - We then iterate through each entry in the new image's matrix, 
+              and find its corresponding index in the old image's matrix. 
+              (The pixel that most closely matches the relative position).
+              To do so, we map/interpolate both the new row index, and the
+              new column index, on to the old ones, and then make the
+              values equal. 
+            - Here is a diagram: http://tech-algorithm.com/uploads/nneighbor01.png
+    %}
+
+    [oldRows,oldCols] = size(tempImage);
     % Display current resolution
-    fprintf("Current resolution: %d (width) x %d (height)\n",oldCols,oldRows);
+    fprintf("\nCurrent resolution: %d (width) x %d (height) pixels\n",oldCols,oldRows);
     
     % Read and verify new width (no. of columns).
     newCols = input("Enter new width (pixels): ");
@@ -30,8 +44,8 @@ function[newImage] = scaleImage(image)
         imageRow = []; 
         for j = 1:newCols
             neighbourCol = round(interp1(newColRange,oldColRange,j)); % Map new image's current column index, onto the old one
-            imageRow = [imageRow,image(neighbourRow,neighbourCol)];
+            imageRow = [imageRow,tempImage(neighbourRow,neighbourCol)]; % Populate a row with these new values. 
         end
-        newImage = [newImage;imageRow];
+        newImage = [newImage;imageRow]; % Populate the newImage matrix with the scaled rows (imageRow). 
     end
 end
